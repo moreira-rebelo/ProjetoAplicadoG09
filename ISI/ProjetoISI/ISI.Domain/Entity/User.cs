@@ -11,16 +11,12 @@ namespace ISI.Domain.Entity
         public Email Email { get; }
         public DateTime CreatedAt { get; }
         
-        private List<Guid> _reservations;
-        public IReadOnlyList<Guid> Reservations => _reservations.AsReadOnly();
-        
-        public User(string firstName, string lastName, Email email, List<Guid>? reservations = null)
+        public User(string firstName, string lastName, Email email)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             CreatedAt = DateTime.UtcNow;
-            _reservations = reservations ?? new List<Guid>();
             Validate();
         }
         

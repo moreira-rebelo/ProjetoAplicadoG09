@@ -1,4 +1,5 @@
 using ISI.Domain.Entity;
+using ISI.Domain.ValueObject;
 using ISI.infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -25,18 +26,15 @@ namespace ISI.infrastructure.Configurations
                 .HasConstraintName("FK_room_controller");
 
 
-            builder.OwnsOne(r => r.RoomLock, roomLock =>
-            {
-                roomLock.Property(rl => rl.AccessCode)
-                    .HasColumnName("access_code")
-                    .IsRequired();
-            });
+            builder.Property(u => u.RoomLock)
+                .HasConversion(
+                    roomLock => roomLock.AccessCode,
+                    roomLock => new RoomLock(roomLock))
+                .HasColumnName("access_code")
+                .HasMaxLength(10)
+                .IsRequired();
 
         }
-        
-        
-        
-        
     }
   
 }

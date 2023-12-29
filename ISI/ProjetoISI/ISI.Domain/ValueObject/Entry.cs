@@ -9,10 +9,10 @@ public class Entry
     public Guid RoomId { get; }
     public Guid ReservationId { get; }
 
-    public Entry(Room roomId, Reservation reservationId)
+    public Entry(Guid roomId, Guid reservationId)
     {
-        RoomId = roomId.Id;
-        ReservationId = reservationId.Id;
+        RoomId = roomId;
+        ReservationId = reservationId;
         AccessTime = DateTime.Now;
     }
 

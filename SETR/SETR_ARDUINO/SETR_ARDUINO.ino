@@ -16,8 +16,10 @@
 #include <Ethernet.h>
 #include <ArduinoRS485.h> // ArduinoModbus depends on the ArduinoRS485 library
 #include <ArduinoModbus.h>
-#include "DHT.h"
 #include <MFRC522.h>
+
+#include "DHT.h"
+#include "pitches.h"
 
 // Enter a MAC address for your controller below.
 // Newer Ethernet shields have a MAC address printed on a sticker on the shield
@@ -33,6 +35,13 @@ EthernetServer ethServer(502);
 #define DHTTYPE DHT11
 #define SS_PIN 5
 #define RST_PIN 9
+#define LED_RED 8
+#define LED_GREEN 7
+#define LED_BLUE 6
+#define BUZZER 4
+
+
+const int ACTUAL_TEMP = 400002;
 
 ModbusTCPServer modbusTCPServer;
 DHT dht(DHTPIN, DHTTYPE);
@@ -84,12 +93,9 @@ void setup() {
     while (1);
   }
 
-  // configure the LED
-  pinMode(9, OUTPUT);
-  digitalWrite(9, LOW);
-
   // configure a single coil at address 0x00
   modbusTCPServer.configureCoils(0x1, 1);
+  modbusTCPServer.configureHoldingRegisters(ACTUAL_TEMP, 1);
 
   dht.begin();
   SPI.begin(); // Init SPI bus
@@ -101,11 +107,9 @@ void setup() {
 }
 
 void loop() {
+
   // listen for incoming clients
   EthernetClient client = ethServer.available();
-
-  //readDht();
-  rfidRead();
   
   if (client) {
     // a new client connected
@@ -118,19 +122,25 @@ void loop() {
       // poll for Modbus TCP requests, while client connected
       modbusTCPServer.poll();
 
+
+      //int coilValue = modbusTCPServer.coilRead(ACTUAL_TEMP);
       // update the LED
-      updateLED();
+      //updateLED();
+      
+      //rfidRead();
+      readDht();
 
       
     }
 
     Serial.println("client disconnected");
   }
+  
 }
 
 void updateLED() {
   // read the current value of the coil
-  int coilValue = modbusTCPServer.coilRead(0x1);
+  int coilValue = modbusTCPServer.coilRead(ACTUAL_TEMP);
 
   if (coilValue) {
     // coil value set, turn LED on
@@ -153,13 +163,17 @@ void readDht() {
   // Read temperature as Celsius (the default)
   float t = dht.readTemperature();
 
+const float SCALING_FACTOR = 10.0;
+int scaledValue = static_cast<int>(t * SCALING_FACTOR);
+modbusTCPServer.holdingRegisterWrite(ACTUAL_TEMP, static_cast<uint16_t>(scaledValue));
+
+
   // Check if any reads failed and exit early (to try again).
   if (isnan(h) || isnan(t)) {
     Serial.println(F("Failed to read from DHT sensor!"));
     return;
   }
 
-  // Compute heat index in Celsius (isFahreheit = false)
   float hic = dht.computeHeatIndex(t, h, false);
 
   Serial.print(F("Humidity: "));
@@ -170,7 +184,7 @@ void readDht() {
   Serial.print(hic);
   Serial.print(F("°C "));
   Serial.print("\n");
-  
+
 }
 
 void rfidRead() {
@@ -191,6 +205,13 @@ void rfidRead() {
    
   printHex(rfid.uid.uidByte, rfid.uid.size);
     Serial.println();
+    digitalWrite(LED_GREEN, HIGH);
+    tone(BUZZER, NOTE_C5, 100);
+    delay(50);
+    tone(BUZZER, NOTE_G5, 100);
+    delay(50);
+    tone(BUZZER, NOTE_C6, 100);
+    //digitalWrite(LED_GREEN, LOW);
    rfid.PICC_HaltA();
 
   

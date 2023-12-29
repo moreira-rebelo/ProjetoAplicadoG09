@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\morei\\Desktop\\ISI-main (1)\\ISI-main\\ProjetoISI\\ISI.Domain\\ISI.Domain.csproj": {}
+    "/home/zeca/RiderProjects/ISI/ProjetoISI/ISI.Domain/ISI.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\morei\\Desktop\\ISI-main (1)\\ISI-main\\ProjetoISI\\ISI.Domain\\ISI.Domain.csproj": {
+    "/home/zeca/RiderProjects/ISI/ProjetoISI/ISI.Domain/ISI.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\morei\\Desktop\\ISI-main (1)\\ISI-main\\ProjetoISI\\ISI.Domain\\ISI.Domain.csproj",
+        "projectUniqueName": "/home/zeca/RiderProjects/ISI/ProjetoISI/ISI.Domain/ISI.Domain.csproj",
         "projectName": "ISI.Domain",
-        "projectPath": "C:\\Users\\morei\\Desktop\\ISI-main (1)\\ISI-main\\ProjetoISI\\ISI.Domain\\ISI.Domain.csproj",
-        "packagesPath": "C:\\Users\\morei\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\morei\\Desktop\\ISI-main (1)\\ISI-main\\ProjetoISI\\ISI.Domain\\obj\\",
+        "projectPath": "/home/zeca/RiderProjects/ISI/ProjetoISI/ISI.Domain/ISI.Domain.csproj",
+        "packagesPath": "/home/zeca/.nuget/packages/",
+        "outputPath": "/home/zeca/RiderProjects/ISI/ProjetoISI/ISI.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\morei\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/zeca/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -55,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

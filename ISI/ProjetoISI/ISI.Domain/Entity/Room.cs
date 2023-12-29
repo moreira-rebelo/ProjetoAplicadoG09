@@ -7,10 +7,9 @@ public class Room: SeedWork.Entity
 {
     public string RoomNumber { get; }
     public RoomLock RoomLock { get; }
+    public long ControllerId { get;}
     
-    public Guid ControllerId { get;}
-    
-    public Room(string roomNumber, RoomLock roomLock , Guid controllerId)
+    public Room(string roomNumber, RoomLock roomLock , long controllerId)
     {
         RoomNumber = roomNumber;
         RoomLock = roomLock;

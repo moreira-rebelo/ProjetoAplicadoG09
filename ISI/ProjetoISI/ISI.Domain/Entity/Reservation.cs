@@ -14,16 +14,12 @@ public class Reservation : AggregateRoot
     public DateTime CreatedAt { get; private set; }
 
     public DateTime UpdatedAt { get; private set; }
-
+    
+    public string ReservationCode { get; private set; }
     public string ReservationPassword { get; private set; }
     public string RoomNumber { get; private set; }
-
-    private List<Entry> _entries;
-
-    public IReadOnlyList<Entry> Entries => _entries.AsReadOnly();
-
-    public Reservation(Guid userId, DateTime checkIn, DateTime checkOut, string roomNumber,
-        List<Entry>? entries = null) : base(Guid.Parse(ReservationCodeGenerator.GenerateReservationCode()))
+    
+    public Reservation(Guid userId, DateTime checkIn, DateTime checkOut, string roomNumber ) 
     {
         UserId = userId;
         CheckIn = checkIn;
@@ -31,8 +27,8 @@ public class Reservation : AggregateRoot
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
         ReservationPassword = ReservationCodeGenerator.GenerateReservationPassword();
+        ReservationCode = ReservationCodeGenerator.GenerateReservationCode();
         RoomNumber = roomNumber;
-        _entries = entries ?? new List<Entry>();
         Validate();
     }
 

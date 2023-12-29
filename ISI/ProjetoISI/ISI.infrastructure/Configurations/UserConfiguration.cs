@@ -15,22 +15,28 @@ namespace ISI.infrastructure.Configurations
 
             builder.Property(u => u.FirstName)
                 .HasColumnName("first_name")
+                .HasMaxLength(100)
                 .IsRequired();
 
             builder.Property(u => u.LastName)
                 .HasColumnName("last_name")
+                .HasMaxLength(100)
                 .IsRequired();
 
             builder.Property(u => u.Email)
                 .HasConversion(
-                    email => email.ToString(),
+                    email => email.Value,
                     email => new Email(email))
                 .HasColumnName("email")
+                .HasMaxLength(100)
                 .IsRequired();
 
             builder.Property(u => u.CreatedAt)
                 .HasColumnName("created_at")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+
+            
         }
     } 
 }

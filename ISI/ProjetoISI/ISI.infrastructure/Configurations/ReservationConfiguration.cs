@@ -23,12 +23,16 @@ public class ReservationConfiguration : IEntityTypeConfiguration<Reservation>
         
         builder.Property(r => r.UpdatedAt)
             .HasColumnName("updated_at");
-
-
+        
         builder.Property(r => r.ReservationPassword)
             .IsRequired()
             .HasMaxLength(10)
             .HasColumnName("reservation_password");
+        
+        builder.Property(r => r.ReservationCode)
+            .IsRequired()
+            .HasMaxLength(10)
+            .HasColumnName("reservation_code");
 
         builder.HasOne<User>()
             .WithMany()
@@ -38,6 +42,7 @@ public class ReservationConfiguration : IEntityTypeConfiguration<Reservation>
         builder.HasOne<Room>()
             .WithMany()
             .HasForeignKey(r => r.RoomNumber)
+            .HasPrincipalKey(r => r.RoomNumber)
             .HasConstraintName("fK_reservation_room");
     }
 }

@@ -1,10 +1,9 @@
-﻿ES2RT linker log file created on 1 de janeiro de 2024 23:22:44
+﻿ES2RT linker log file created on 2 de janeiro de 2024 20:41:52
 
 Linking...
 User Info - Resource Id [ NrOfTags ], caused in [ LinkerVar ]
-User Warning - Resource Id [ AnimationVisibilityWithoutTag ], containing object type [ DYNAMIC_DUMMY_HATCH ]
 User Info - Resource Id [ NumberPowerTags ], caused in [ LinkerLicense ]
-0 errors, 1 warnings - succeeded.
+0 errors, 0 warnings - succeeded.
 
 Writing "C:\Users\morei\Desktop\REPO PA\SETR\SETR_HMI\SETR_HMI.Device_1"...
 Done.

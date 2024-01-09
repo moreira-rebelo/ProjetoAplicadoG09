@@ -1,8 +1,8 @@
 namespace ISI.Domain.SeedWork;
 
-public abstract class AggregateRoot : Entity
+public abstract class AggregateRoot<TId> : Entity<TId>
 {
     protected AggregateRoot() : base() { }
 
-    protected AggregateRoot(Guid id) : base(id) { } 
+    protected AggregateRoot(TId id) : base(id) { }
 }

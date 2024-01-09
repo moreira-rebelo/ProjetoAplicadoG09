@@ -13,19 +13,17 @@ namespace ISI.infrastructure.Configurations
         {
             builder.ToTable("room");
 
-            builder.HasKey(r => r.Id);
-
-            builder.Property(r => r.RoomNumber)
-                .HasColumnName("number")
-                .IsRequired()
-                .HasMaxLength(10); ;
+            builder.HasKey(r => r.Id).HasName("room_number_pk");
             
-            builder.HasOne<ControllerModel>() 
+            builder.Property(r => r.Id)
+                .HasMaxLength(10)
+                .HasColumnName("room_number_pk");
+            
+            builder.HasOne<ControllerModel>()
                 .WithOne()
                 .HasForeignKey<Room>(r => r.ControllerId)
-                .HasConstraintName("FK_room_controller");
-
-
+                .HasConstraintName("fk_room_controller");
+            
             builder.Property(u => u.RoomLock)
                 .HasConversion(
                     roomLock => roomLock.AccessCode,
@@ -33,9 +31,6 @@ namespace ISI.infrastructure.Configurations
                 .HasColumnName("access_code")
                 .HasMaxLength(10)
                 .IsRequired();
-
         }
     }
-  
 }
-

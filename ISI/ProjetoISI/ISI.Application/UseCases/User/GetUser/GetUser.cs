@@ -4,20 +4,23 @@ using ISI.Domain.Repository;
 
 namespace ISI.Application.UseCases.User.GetUser;
 
-public class GetUser
+public class GetUser: IGetUser
 {
     private readonly IUserRepository _userRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IReservationRepository _reservationRepository;
     
-    public GetUser(IUserRepository userRepository, IUnitOfWork unitOfWork)
+    public GetUser(IUserRepository userRepository, IReservationRepository reservationRepository)
     {
         _userRepository = userRepository;
-        _unitOfWork = unitOfWork;
+        _reservationRepository = reservationRepository;
     }
 
     public async Task<GetUserOutput> Handle(GetUserInput input, CancellationToken cancellationToken)
     {
-        var user  = await _userRepository.GetUserByEmailAddress(input.Email, cancellationToken);
+        
+        var reservation  = await _reservationRepository.Get(input.ReservationCode, cancellationToken);
+        
+        var user  = await _userRepository.Get(reservation.UserId, cancellationToken);
         
         return GetUserOutput.FromUser(user);
     }

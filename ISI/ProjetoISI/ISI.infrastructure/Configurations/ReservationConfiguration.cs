@@ -8,8 +8,12 @@ public class ReservationConfiguration : IEntityTypeConfiguration<Reservation>
     {
         builder.ToTable("reservations");
 
-        builder.HasKey(r => r.Id).HasName("reservation_code_pk");
-        
+        builder.HasKey(r => r.Id).HasName("reservation_code");
+
+        builder.Property(r => r.Id)
+            .HasMaxLength(10)
+            .HasColumnName("reservation_code_pk");
+
         builder.Property(r => r.CheckIn)
             .IsRequired()
             .HasColumnName("checkin");
@@ -20,29 +24,32 @@ public class ReservationConfiguration : IEntityTypeConfiguration<Reservation>
 
         builder.Property(r => r.CreatedAt)
             .HasColumnName("created_at");
-        
+
         builder.Property(r => r.UpdatedAt)
             .HasColumnName("updated_at");
-        
+
+
         builder.Property(r => r.ReservationPassword)
             .IsRequired()
             .HasMaxLength(10)
             .HasColumnName("reservation_password");
-        
-        builder.Property(r => r.ReservationCode)
-            .IsRequired()
-            .HasMaxLength(10)
-            .HasColumnName("reservation_code");
 
         builder.HasOne<User>()
             .WithMany()
             .HasForeignKey(r => r.UserId)
             .HasConstraintName("fk_reservation_user");
+        
+        builder.Property(r => r.UserId)
+            .IsRequired()
+            .HasColumnName("fk_reservation_user");
 
         builder.HasOne<Room>()
             .WithMany()
             .HasForeignKey(r => r.RoomNumber)
-            .HasPrincipalKey(r => r.RoomNumber)
             .HasConstraintName("fK_reservation_room");
+        
+        builder.Property(r => r.RoomNumber)
+            .IsRequired()
+            .HasColumnName("fK_reservation_room");
     }
 }

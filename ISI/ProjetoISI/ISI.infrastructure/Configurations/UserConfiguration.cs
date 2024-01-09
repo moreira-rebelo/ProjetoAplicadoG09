@@ -15,12 +15,12 @@ namespace ISI.infrastructure.Configurations
 
             builder.Property(u => u.FirstName)
                 .HasColumnName("first_name")
-                .HasMaxLength(100)
+                .HasMaxLength(10)
                 .IsRequired();
 
             builder.Property(u => u.LastName)
                 .HasColumnName("last_name")
-                .HasMaxLength(100)
+                .HasMaxLength(10)
                 .IsRequired();
 
             builder.Property(u => u.Email)
@@ -34,9 +34,6 @@ namespace ISI.infrastructure.Configurations
             builder.Property(u => u.CreatedAt)
                 .HasColumnName("created_at")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            
-
-            
         }
     } 
 }

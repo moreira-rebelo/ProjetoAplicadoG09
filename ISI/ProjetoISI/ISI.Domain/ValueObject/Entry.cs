@@ -6,20 +6,20 @@ namespace ISI.Domain.ValueObject;
 public class Entry
 {
     public DateTime AccessTime { get; }
-    public Guid RoomId { get; }
-    public Guid ReservationId { get; }
+    public string RoomNumber { get; }
+    public string ReservationCode { get; }
 
-    public Entry(Guid roomId, Guid reservationId)
+    public Entry(string roomNumber, string reservationCode)
     {
-        RoomId = roomId;
-        ReservationId = reservationId;
+        RoomNumber = roomNumber;
+        ReservationCode = reservationCode;
         AccessTime = DateTime.Now;
     }
 
     private void Validate()
     {
-        DomainValidation.NotNullOrEmpty(RoomId.ToString(), nameof(RoomId));
-        DomainValidation.NotNullOrEmpty(ReservationId.ToString(), nameof(ReservationId));
+        DomainValidation.NotNullOrEmpty(RoomNumber, nameof(RoomNumber));
+        DomainValidation.NotNullOrEmpty(ReservationCode, nameof(ReservationCode));
     }
 }
 

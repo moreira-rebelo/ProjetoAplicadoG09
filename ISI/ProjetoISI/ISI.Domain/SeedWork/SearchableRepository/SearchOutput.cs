@@ -1,12 +1,13 @@
 namespace ISI.Domain.SeedWork.SearchableRepository;
 
-public class SearchOutput<TAggregate>
-    where TAggregate : AggregateRoot
+public class SearchOutput<TAggregate, TId>
+    where TAggregate : AggregateRoot<TId>
 {
     public int CurrentPage { get; set; }
     public int PerPage { get; set; }
     public int Total { get; set; }
     public IReadOnlyList<TAggregate> Items { get; set; }
+
     public SearchOutput(
         int currentPage, 
         int perPage, 

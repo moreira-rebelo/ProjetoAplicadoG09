@@ -3,6 +3,7 @@ using System;
 using ISI.infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ISI.infrastructure.Migrations
 {
     [DbContext(typeof(IsiDbContext))]
-    partial class IsiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231225221654_Nomes")]
+    partial class Nomes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,20 +112,17 @@ namespace ISI.infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("text")
                         .HasColumnName("email");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
+                        .HasColumnType("text")
                         .HasColumnName("first_name");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
+                        .HasColumnType("text")
                         .HasColumnName("last_name");
 
                     b.HasKey("Id");

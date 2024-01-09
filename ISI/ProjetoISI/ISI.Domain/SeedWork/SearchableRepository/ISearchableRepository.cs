@@ -1,9 +1,9 @@
 namespace ISI.Domain.SeedWork.SearchableRepository;
 
-public interface ISearchableRepository<Taggregate>
-    where Taggregate : AggregateRoot
+public interface ISearchableRepository<TAggregate, TId>
+    where TAggregate : AggregateRoot<TId>
 {
-    Task<SearchOutput<Taggregate>> Search(
+    Task<SearchOutput<TAggregate, TId>> Search(
         SearchInput input,
         CancellationToken cancellationToken
     );

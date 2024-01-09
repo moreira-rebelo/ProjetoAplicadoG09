@@ -3,6 +3,7 @@ using System;
 using ISI.infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ISI.infrastructure.Migrations
 {
     [DbContext(typeof(IsiDbContext))]
-    partial class IsiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231225220929_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,9 +28,7 @@ namespace ISI.infrastructure.Migrations
             modelBuilder.Entity("ISI.Domain.Entity.Reservation", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
-                        .HasColumnName("reservation_code_pk");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CheckIn")
                         .HasColumnType("timestamp with time zone")
@@ -49,19 +50,17 @@ namespace ISI.infrastructure.Migrations
 
                     b.Property<string>("RoomNumber")
                         .IsRequired()
-                        .HasColumnType("character varying(10)")
-                        .HasColumnName("fK_reservation_room");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("fk_reservation_user");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id")
-                        .HasName("reservation_code");
+                        .HasName("reservation_code_pk");
 
                     b.HasIndex("RoomNumber");
 
@@ -73,9 +72,7 @@ namespace ISI.infrastructure.Migrations
             modelBuilder.Entity("ISI.Domain.Entity.Room", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
-                        .HasColumnName("room_number_pk");
+                        .HasColumnType("text");
 
                     b.Property<long>("ControllerId")
                         .HasColumnType("bigint");
@@ -109,20 +106,17 @@ namespace ISI.infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("text")
                         .HasColumnName("email");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
+                        .HasColumnType("text")
                         .HasColumnName("first_name");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
+                        .HasColumnType("text")
                         .HasColumnName("last_name");
 
                     b.HasKey("Id");
@@ -133,14 +127,12 @@ namespace ISI.infrastructure.Migrations
             modelBuilder.Entity("ISI.Domain.ValueObject.Entry", b =>
                 {
                     b.Property<string>("RoomNumber")
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
-                        .HasColumnName("room_number");
+                        .HasColumnType("text")
+                        .HasColumnName("room_id");
 
                     b.Property<string>("ReservationCode")
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
-                        .HasColumnName("reservation_code");
+                        .HasColumnType("text")
+                        .HasColumnName("reservation_id");
 
                     b.Property<DateTime>("AccessTime")
                         .HasColumnType("timestamp with time zone")

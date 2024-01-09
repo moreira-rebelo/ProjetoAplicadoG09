@@ -6,6 +6,7 @@ using System.Text;
 
 public class JwtTokenGenerator
 {
+    
     public static string GenerateToken(string username)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("685c5530-c2c7-4d79-898c-3bde1deb0079"));

@@ -1,10 +1,10 @@
 namespace ISI.Domain.SeedWork;
 
-public abstract class Entity
+public abstract class Entity<TId>
 {
-    public Guid Id { get; protected set; }
+    public TId Id { get; protected set; }
 
-    protected Entity() => Id = Guid.NewGuid();
+    protected Entity() { }
 
-    protected Entity(Guid id) => Id = id; // Additional constructor
+    protected Entity(TId id) => Id = id;
 }

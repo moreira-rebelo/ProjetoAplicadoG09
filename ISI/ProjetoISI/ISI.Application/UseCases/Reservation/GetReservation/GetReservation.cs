@@ -7,12 +7,10 @@ public class GetReservation : IGetReservation
 {
 
     private readonly IReservationRepository _reservationRepository;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public GetReservation(IReservationRepository reservationRepository, IUnitOfWork unitOfWork)
+    public GetReservation(IReservationRepository reservationRepository)
     {
         _reservationRepository = reservationRepository;
-        _unitOfWork = unitOfWork;
     }
 
     public async Task<GetReservationOutput> Handle(GetReservationInput input, CancellationToken cancellationToken)

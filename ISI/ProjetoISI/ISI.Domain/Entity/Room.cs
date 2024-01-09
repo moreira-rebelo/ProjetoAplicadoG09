@@ -1,31 +1,24 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using ISI.Domain.SeedWork;
 using ISI.Domain.ValueObject;
 
 namespace ISI.Domain.Entity;
 
-public class Room: SeedWork.Entity
+public class Room: SeedWork.Entity<string>
 {
-    public string RoomNumber { get; }
+    [NotMapped]
     public RoomLock RoomLock { get; }
     public long ControllerId { get;}
     
-    public Room(string roomNumber, RoomLock roomLock , long controllerId)
+    public Room(RoomLock roomLock , long controllerId)
     {
-        RoomNumber = roomNumber;
         RoomLock = roomLock;
         ControllerId = controllerId;
-        Validate();
     }
     
     public bool CompareAccessCode(string accessCode)
     {
         return RoomLock.CompareAccessCode(accessCode);
     }
-
-    private void Validate()
-    {
-        Validation.DomainValidation.NotNullOrEmpty(RoomNumber, nameof(RoomNumber));
-    }
-    
     
 }

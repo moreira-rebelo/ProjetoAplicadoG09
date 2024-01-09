@@ -7,12 +7,18 @@ public class EntryConfiguration : IEntityTypeConfiguration<Entry>
     public void Configure(EntityTypeBuilder<Entry> builder)
     {
         builder.ToTable("room_history");
-        builder.HasKey(e => new { e.RoomId, e.ReservationId, e.AccessTime });
+        builder.HasKey(e => new { e.RoomNumber, e.ReservationCode, e.AccessTime });
         builder.Property(e => e.AccessTime)
-            .HasColumnName("access_time");
-        builder.Property(e => e.RoomId)
-            .HasColumnName("room_id");
-        builder.Property(e => e.ReservationId)
-            .HasColumnName("reservation_id");
+            .HasColumnName("access_time")
+            .HasConversion(
+                v => v.ToUniversalTime(), // Convert to UTC when saving to database
+                v => DateTime.SpecifyKind(v, DateTimeKind.Utc) // Treat as UTC when reading from database
+            );
+        builder.Property(e => e.RoomNumber)
+            .HasColumnName("room_number")
+            .HasMaxLength(10);
+        builder.Property(e => e.ReservationCode)
+            .HasColumnName("reservation_code")
+            .HasMaxLength(10);
     }
 }

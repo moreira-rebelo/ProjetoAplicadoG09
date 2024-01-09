@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#F56E0F</item>       <!-- Example Hex color for colorPrimary -->
+        <item name="colorPrimaryDark">#151419</item>   <!-- Example Hex color for colorPrimaryDark -->
+        <item name="colorAccent">#F56E0F</item>        <!-- Example Hex color for colorAccent -->
+    </style>
+</resources>

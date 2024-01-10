@@ -10,13 +10,14 @@
 ▐░█▄▄▄▄▄▄▄█░▌▐░█▄▄▄▄▄█░█░▌ ▄▄▄▄▄▄▄▄▄█░▌
 ▐░░░░░░░░░░░▌ ▐░░░░░░░░░▌ ▐░░░░░░░░░░░▌
  ▀▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀
+
+ A arquitetura do sistema pode ser consultada aqui: https://www.tinkercad.com/things/6fuR2PdYajt-g09arquitetura?sharecode=DZn1LgPJ6uCre0JBuYuB8YrbdNv2KH3S8VHToi4_N8Y
 */
 
 #include <SPI.h>
 #include <Ethernet.h>
 #include <MFRC522.h>
 #include <MQTT.h>
-#include <TimerOne.h>
 
 #include "DHT.h"
 #include "pitches.h"
@@ -34,6 +35,7 @@ byte ip[] = {192, 168, 1, 15};
 #define LED_GREEN 7
 #define LED_BLUE 6
 #define BUZZER 4
+#define BUT_INTERRUPT 3
 
 // -----------------------  Inicialização dos objetos e variáveis globais  -----------------------
 EthernetClient net;
@@ -43,13 +45,9 @@ MFRC522 rfid(SS_PIN, RST_PIN);
 MFRC522::MIFARE_Key key;
 
 byte nuidPICC[4];
-unsigned long lastDhtReadTime = 0;
-const unsigned long intervalDHT = 60000;
 float tempSetpoint = 21;
 float tempActual;
 String fechaduraStatus = "LOCKED";
-unsigned long tempoAnterior = 0;
-const long intervalo = 1000;
 
 // -----------------------  Void Setup  -----------------------
 void setup()
@@ -66,14 +64,20 @@ void setup()
     SPI.begin();     // Inicializa a comunicação SPI
     rfid.PCD_Init(); // Inicializa o módulo RFID
 
-    //Timer1.initialize(5000000); //Tempo do interrupt
-    //Timer1.attachInterrupt(interrupt);
+    pinMode(LED_RED, OUTPUT);
+    pinMode(LED_GREEN, OUTPUT);
+    pinMode(LED_BLUE, OUTPUT);
+    pinMode(BUZZER, OUTPUT);
+    pinMode(BUT_INTERRUPT, INPUT_PULLUP);
 
     // Define a chave para o módulo RFID
     for (byte i = 0; i < 6; i++)
     {
         key.keyByte[i] = 0xFF;
     }
+
+    attachInterrupt(digitalPinToInterrupt(BUT_INTERRUPT), interrupt, RISING);
+
 }
 
 // -----------------------  Void Loop  -----------------------
@@ -89,10 +93,11 @@ void loop()
 
     rfidRead(); // Função para ler o cartão RFID
 
-    /*if (millis() - tempoAnterior >= intervalo){
-      tempoAnterior = millis();
-    }*/
-    interrupt();
+    ac(tempSetpoint, tempActual);   // Chama a função para controlar o sistema de ar condicionado
+
+    fechadura(fechaduraStatus);     // Chama a função para controlar o estado da fechadura
+
+    readDht(); // Chama a função para ler a temperatura
 
 }
 
@@ -105,7 +110,7 @@ void readDht()
 
     String temperatureString = String(tempActual);
     client.publish("actualTemp", temperatureString.c_str());
-    Serial.println(tempActual);
+    //Serial.println(tempActual);
 
 }
 
@@ -288,8 +293,9 @@ void accessDenied()
 }
 
 void interrupt() {
-    ac(tempSetpoint, tempActual);   // Chama a função para controlar o sistema de ar condicionado
-    fechadura(fechaduraStatus);     // Chama a função para controlar o estado da fechadura
-    readDht(); // Chama a função para ler a temperatura
-    Serial.println("CHAMOU");
+    digitalWrite(LED_BLUE, HIGH);
+    digitalWrite(LED_RED, HIGH);
+    digitalWrite(LED_GREEN, HIGH);
+    tone(BUZZER, NOTE_C6, 100);
+    
 }

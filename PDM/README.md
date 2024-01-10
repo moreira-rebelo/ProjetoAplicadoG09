@@ -50,26 +50,6 @@ All data displayed in this view is fetched using MQTT, except for the room numbe
 The Room Climate Controls view is a fragment and is displayed on the bottom over the Room Controls View giving the user a sense of context and hierarchy. The data displayed here was previously fetched through MQTT as talked about earlier and by pressing the plus or minus button, the temperature setpoint is increased or decreased accordingly. Once the temperature setpoint has been changed the new setpoint is sent to the Arduino to change the climate controls.
 
 ![View3](./View3.png)
-## How it works
-
-When the user opens the app, it is greeted with a login screen for the hotel, this is the APP's first view. Each hotel has a specific app, but the code is the same for every hotel, the thing that changes is the stying of the app.
-
- ![View1](./View1.png)
-
-This view has the fields for the reservation and password. When the user inserts the login credentials and presses Login, the app sends that information over to the API which is hosted in a Amazon Web Services (AWS) server wich then verifies if the credentials are valid. If they aren't or an error occurs, a toast is displayed giving the user the reason for the failed authentication. If they are correct, the APP changes to the room controls screen.
-
-The Room Controls View has everything the user need to control their room including and the room's devices statuses such as:
-- Door status (Locked / Unlocked)
-- Open Door
-- Air Conditioning Status (Heating / Cooling / Off), room temperature and temperature setpoint
-
-![View2](./View2.png)
-
-All data displayed in this view is fetched using MQTT, except for the room number, which is retrieved from the API based on the user's assigned room. When the user taps on the door icon, an MQTT message is dispatched to a specific topic. This message is then received and processed by the Arduino system, triggering the door to unlock or open. Similarly, tapping on the Air Conditioning icon redirects the user to the Room Climate Controls View.
-
-The Room Climate Controls view is a fragment and is displayed on the bottom over the Room Controls View giving the user a sense of context and hierarchy. The data displayed here was previously fetched through MQTT as talked about earlier and by pressing the plus or minus button, the temperature setpoint is increased or decreased accordingly. Once the temperature setpoint has been changed the new setpoint is sent to the Arduino to change the climate controls.
-
-![View3](./View3.png)
 ## Conclusion
 
 The SmartStay Connect project stands as a testament to the convergence of modern technology and hospitality, aiming to enhance the user experience for hotel guests. Through the development of this Android application, the primary goal was to provide an intuitive interface that allows users to interact seamlessly with various room functionalities, including door access and climate control.
